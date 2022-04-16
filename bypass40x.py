@@ -20,6 +20,13 @@ def make_curl_request(url):
 	code = popen("curl -k -s -I %s | grep HTTP"%(url)).read()
 	return code
 
+def make_weird_urls(domain, path):
+	urls = []
+	normal_get = domain + path
+	urls.append(normal_get)
+	normal_post = domain + path + '-X POST'
+	urls.append(normal_post)
+
 # TODO: make different urls and pass to make_curl_request 
 def do_bypass(url):
 	code  = make_curl_request(url)
