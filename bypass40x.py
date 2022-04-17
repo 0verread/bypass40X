@@ -76,7 +76,6 @@ def make_weird_urls(domain, path):
 
 # TODO: make different urls and pass to make_curl_request 
 def do_bypass(domain, path):
-	# url = domain + path
 	urls = make_weird_urls(domain, path)
 	for url in urls:
 		code  = make_curl_request(url)
@@ -88,26 +87,29 @@ def request_handler(domain, paths):
 		print(f"How the hell did you bypass required argument?? Lemme know.")
 		sys.exit(1)
 
-	for path in paths:
-		whole_path = domain + path
-		do_bypass(domain, path)
+	if len(paths) == 0:
+		print(f"No path added in pathlist file")
+		sys.exit(1)
+	else:
+		for path in paths:
+			do_bypass(domain, path)
 
 def main():
 	domain = args.domain
 	pathlist  = args.path
 
+	if not domain.startswith("http://") or not domain.startswith("https://"):
+		print(f"URL parameter doesn't start  with http or https")
+		sys.exit(1)
+
 	with open(pathlist) as file:
 		paths = [path.rstrip() for path in file]
 	
-
-	if not domain.startswith("http"):
-		print(f"URL parameter doesn't start  with http or https")
-		sys.exit(1)
 	if len(paths) == 0:
-		print(f"Path file is empty.")
+		print(f"Path file is empty. Add minimun one path.")
 		sys.exit(1)
-
-	request_handler(domain, paths)
+	else:
+		request_handler(domain, paths)
 
 if __name__ == "__main__" :
 	main()
