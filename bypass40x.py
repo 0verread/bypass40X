@@ -35,16 +35,22 @@ def get_http_verbs():
 
 	return verbs_dict
 
-def get_headers():
+def get_headers(domain, path):
 	headers = {
-
+		'x-forwarded-for' : f'-H X-Forwarded-For: 127.0.0.1:80',
+		'x-rewrite-url' : f'-H X-rewrite-url: {path}',
+		'x-original-url' : f'-H X-Original-URL: {path}',
+		'x-forwarded-for-lh' : f'-H X-Forwarded-For: http://127.0.0.1',
 	}
+
 	return headers
 
 def make_weird_urls(domain, path):
 	urls = []
 	http_verbs = get_http_verbs()
+	headers = get_headers(domain, path)
 
+	# path temper
 	urls.append(f"{domain}{path}")
 	urls.append(f"{domain}{path}/.")
 	urls.append(f"{domain}/{path}//")
@@ -57,7 +63,15 @@ def make_weird_urls(domain, path):
 	# HTTP verbs 
 	urls.append(f"{http_verbs['post']} {domain}{path}")
 	urls.append(f"{http_verbs['trace']} {domain}{path}")
-	print(urls)
+	urls.append(f"{http_verbs['get']} {domain}{path}")
+	urls.append(f"{http_verbs['put']} {domain}{path}")
+
+	# headers
+	urls.append(f"{domain} {headers['x-rewrite-url']}")
+	urls.append(f"{domain}{path} {headers['x-original-url']}")
+	urls.append(f"{domain}{path} {headers['x-forwarded-for']}")
+	urls.append(f"{domain}{path} {headers['x-forwarded-for-lh']}")
+
 	return urls
 
 # TODO: make different urls and pass to make_curl_request 
