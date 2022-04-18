@@ -13,15 +13,14 @@ parser.add_argument("-xh", "--header", type=str, required=False, help="Extra hea
 args = parser.parse_args()
 
 # TODO list
-# support for custom header
+# some color
 # banner
 
 def make_curl_request(url):
 	# print(url)
 	curl_req = "curl -k -s -I %s"%(url)
-	print(curl_req)
 	code = popen("%s | grep HTTP"%(curl_req)).read()
-	return code
+	return curl_req,code
 
 def get_http_verbs():
 	verbs_dict = {
@@ -79,12 +78,11 @@ def get_urls(domain, path, extra_header=None):
 	return urls
 
 # TODO: make different urls and pass to make_curl_request 
-def do_bypass(domain, path, extra_header=None):
-	urls = get_urls(domain, path, extra_header)
+def do_bypass(urls):
 	for url in urls:
-		code  = make_curl_request(url)
-		status_code = code.split(" ")[1]
-		print(f"{status_code} : {url}")
+		curl_req, code  = make_curl_request(url)
+		status_code = code.split( " ")[1]
+		print(f"{status_code} : {curl_req}")
 
 def request_handler(domain, paths, extra_header=None):
 	if domain is None:
@@ -96,14 +94,13 @@ def request_handler(domain, paths, extra_header=None):
 		sys.exit(1)
 	else:
 		for path in paths:
-			do_bypass(domain, path, extra_header)
+			urls = get_urls(domain, path, extra_header)
+			do_bypass(urls)
 
 def main():
 	domain = args.domain
 	pathlist  = args.path
 	extra_header = args.header
-
-	print(extra_header)
 
 	if not domain.startswith("http://") and not domain.startswith("https://"):
 		print(f"URL parameter doesn't start  with http or https")
@@ -120,3 +117,4 @@ def main():
 
 if __name__ == "__main__" :
 	main()
+
