@@ -13,7 +13,6 @@ parser.add_argument("-xh", "--header", type=str, required=False, help="Extra hea
 args = parser.parse_args()
 
 # TODO list
-# support for user-aget
 # support for custom header
 # banner
 
@@ -45,7 +44,7 @@ def get_headers(domain, path):
 
 	return headers
 
-def make_weird_urls(domain, path):
+def get_urls(domain, path, extra_header=None):
 	urls = []
 	http_verbs = get_http_verbs()
 	headers = get_headers(domain, path)
@@ -72,17 +71,22 @@ def make_weird_urls(domain, path):
 	urls.append(f"{domain}{path} {headers['x-forwarded-for']}")
 	urls.append(f"{domain}{path} {headers['x-forwarded-for-lh']}")
 
+	# add extra header if provided
+	if not extra_header is None:
+		for i in range(len(urls)):
+			urls[i] = urls[i] + ' -H ' + extra_header
+
 	return urls
 
 # TODO: make different urls and pass to make_curl_request 
-def do_bypass(domain, path):
-	urls = make_weird_urls(domain, path)
+def do_bypass(domain, path, extra_header=None):
+	urls = get_urls(domain, path, extra_header)
 	for url in urls:
 		code  = make_curl_request(url)
 		status_code = code.split(" ")[1]
 		print(f"{status_code} : {url}")
 
-def request_handler(domain, paths, custom_header=None):
+def request_handler(domain, paths, extra_header=None):
 	if domain is None:
 		print(f"How the hell did you bypass required argument?? Lemme know.")
 		sys.exit(1)
@@ -92,14 +96,14 @@ def request_handler(domain, paths, custom_header=None):
 		sys.exit(1)
 	else:
 		for path in paths:
-			do_bypass(domain, path)
+			do_bypass(domain, path, extra_header)
 
 def main():
 	domain = args.domain
 	pathlist  = args.path
-	custom_header = args.header
+	extra_header = args.header
 
-	print(custom_header)
+	print(extra_header)
 
 	if not domain.startswith("http://") and not domain.startswith("https://"):
 		print(f"URL parameter doesn't start  with http or https")
@@ -112,7 +116,7 @@ def main():
 		print(f"Path file is empty. Add minimun one path.")
 		sys.exit(1)
 	else:
-		request_handler(domain, paths, custom_header)
+		request_handler(domain, paths, extra_header)
 
 if __name__ == "__main__" :
 	main()
