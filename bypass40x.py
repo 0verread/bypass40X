@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-d", "--domain", type=str, required=True, help="target domain")
 parser.add_argument("-p", "--path", type=Path, required=True, help="File path dontains paths to bypass")
-parser.add_argument("-ua", "--user-agent", type=str, required=False, help="user-agent header")
+parser.add_argument("-xh", "--header", type=str, required=False, help="Extra header")
 args = parser.parse_args()
 
 # TODO list
@@ -82,7 +82,7 @@ def do_bypass(domain, path):
 		status_code = code.split(" ")[1]
 		print(f"{status_code} : {url}")
 
-def request_handler(domain, paths):
+def request_handler(domain, paths, custom_header=None):
 	if domain is None:
 		print(f"How the hell did you bypass required argument?? Lemme know.")
 		sys.exit(1)
@@ -97,8 +97,11 @@ def request_handler(domain, paths):
 def main():
 	domain = args.domain
 	pathlist  = args.path
+	custom_header = args.header
 
-	if not domain.startswith("http://") or not domain.startswith("https://"):
+	print(custom_header)
+
+	if not domain.startswith("http://") and not domain.startswith("https://"):
 		print(f"URL parameter doesn't start  with http or https")
 		sys.exit(1)
 
@@ -109,7 +112,7 @@ def main():
 		print(f"Path file is empty. Add minimun one path.")
 		sys.exit(1)
 	else:
-		request_handler(domain, paths)
+		request_handler(domain, paths, custom_header)
 
 if __name__ == "__main__" :
 	main()
