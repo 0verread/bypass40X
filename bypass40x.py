@@ -23,13 +23,12 @@ banner = r"""
 	██╔══██╗  ╚██╔╝  ██╔═══╝ ██╔══██║╚════██║╚════██║╚════██║████╔╝██║ ██╔██╗ 
 	██████╔╝   ██║   ██║     ██║  ██║███████║███████║     ██║╚██████╔╝██╔╝ ██╗
 	╚═════╝    ╚═╝   ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝
-	                                                                    by 0verread """
+	                                                                by 0verread """
 
 def make_curl_request(url):
-	# print(url)
 	curl_req = "curl -k -s -I %s"%(url)
 	code = popen("%s | grep HTTP"%(curl_req)).read()
-	return curl_req,code
+	return curl_req, code
 
 def get_http_verbs():
 	verbs_dict = {
