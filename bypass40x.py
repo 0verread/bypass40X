@@ -14,7 +14,16 @@ args = parser.parse_args()
 
 # TODO list
 # some color
-# banner
+
+banner = r"""
+
+	██████╗ ██╗   ██╗██████╗  █████╗ ███████╗███████╗██╗  ██╗ ██████╗ ██╗  ██╗
+	██╔══██╗╚██╗ ██╔╝██╔══██╗██╔══██╗██╔════╝██╔════╝██║  ██║██╔═████╗╚██╗██╔╝
+	██████╔╝ ╚████╔╝ ██████╔╝███████║███████╗███████╗███████║██║██╔██║ ╚███╔╝ 
+	██╔══██╗  ╚██╔╝  ██╔═══╝ ██╔══██║╚════██║╚════██║╚════██║████╔╝██║ ██╔██╗ 
+	██████╔╝   ██║   ██║     ██║  ██║███████║███████║     ██║╚██████╔╝██╔╝ ██╗
+	╚═════╝    ╚═╝   ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝
+	                                                                    by 0verread """
 
 def make_curl_request(url):
 	# print(url)
@@ -77,7 +86,6 @@ def get_urls(domain, path, extra_header=None):
 
 	return urls
 
-# TODO: make different urls and pass to make_curl_request 
 def do_bypass(urls):
 	for url in urls:
 		curl_req, code  = make_curl_request(url)
@@ -116,5 +124,6 @@ def main():
 		request_handler(domain, paths, extra_header)
 
 if __name__ == "__main__" :
+	print(banner)
 	main()
 
