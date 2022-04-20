@@ -4,6 +4,7 @@ import sys
 import argparse
 from os import popen
 from pathlib import Path
+# from colorama import Fore, Back, Style
 
 parser = argparse.ArgumentParser()
 
@@ -89,7 +90,12 @@ def do_bypass(urls):
 	for url in urls:
 		curl_req, code  = make_curl_request(url)
 		status_code = code.split( " ")[1]
-		print(f"{status_code} : {curl_req}")
+		if status_code == "200":
+			print(f"\033[92m{status_code} : {curl_req} \033[0m")
+		elif status_code.startswith("30"):
+			print(f"\033[93m{status_code} : {curl_req} \033[0m")
+		else:
+			print(f"{status_code} : {curl_req}")
 
 def request_handler(domain, paths, extra_header=None):
 	if domain is None:
@@ -124,5 +130,8 @@ def main():
 
 if __name__ == "__main__" :
 	print(banner)
+	# print("\033[91m Status not found \033[0m")
+	# # print('\033[31m' + 'Some red test')
+	# # print('\033[39m')
 	main()
 
