@@ -134,8 +134,5 @@ def main():
 
 if __name__ == "__main__" :
 	print(banner)
-	# print("\033[91m Status not found \033[0m")
-	# # print('\033[31m' + 'Some red test')
-	# # print('\033[39m')
 	main()
 
