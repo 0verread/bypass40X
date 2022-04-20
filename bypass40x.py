@@ -13,9 +13,6 @@ parser.add_argument("-p", "--path", type=Path, required=True, help="File path do
 parser.add_argument("-xh", "--header", type=str, required=False, help="Extra header")
 args = parser.parse_args()
 
-# TODO list
-# some color
-
 banner = r"""
 
 	██████╗ ██╗   ██╗██████╗  █████╗ ███████╗███████╗██╗  ██╗ ██████╗ ██╗  ██╗
@@ -24,7 +21,7 @@ banner = r"""
 	██╔══██╗  ╚██╔╝  ██╔═══╝ ██╔══██║╚════██║╚════██║╚════██║████╔╝██║ ██╔██╗ 
 	██████╔╝   ██║   ██║     ██║  ██║███████║███████║     ██║╚██████╔╝██╔╝ ██╗
 	╚═════╝    ╚═╝   ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝
-	                                                                by 0verread """
+	                                                               by 0verread """
 
 def make_curl_request(url):
 	curl_req = "curl -k -s -I %s"%(url)
@@ -66,6 +63,13 @@ def get_urls(domain, path, extra_header=None):
 	urls.append(f"{domain}{path}%20")
 	urls.append(f"{domain}{path}.html")
 	urls.append(f"{domain}{path}.php")
+	urls.append(f"{domain}{path}#")
+	urls.append(f"{domain}{path}/*")
+	urls.append(f"{domain}{path}.json")
+	urls.append(f"{domain}{path};/")
+	urls.append(f"{domain}{path}..;/")
+	urls.append(f"{domain}{path}%20")
+	urls.append(f"{domain}{path}?")
 
 	# HTTP verbs 
 	urls.append(f"{http_verbs['post']} {domain}{path}")
