@@ -8,7 +8,7 @@ from pathlib import Path
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-d", "--domain", type=str, required=True, help="target domain")
-parser.add_argument("-p", "--path", type=Path, required=True, help="File path dontains paths to bypass")
+parser.add_argument("-p", "--pathlist", type=Path, required=True, help="File path dontains paths to bypass")
 parser.add_argument("-xh", "--header", type=str, required=False, help="Extra header")
 args = parser.parse_args()
 

@@ -6,13 +6,25 @@ python3 bypass40X.py -d example.com -p paths.txt
 
 ***WIP Active development***
 
+### Installtion
+
+```
+git clone https://github.com/0verread/bypass40X.git
+cd bypass40X
+python3 bypass40x.py -h
+```
+
+### Usage:
+
+pythton3 bypass40x.py -d <target-domain> -p <pathlist> 
 ```bash
-usage: bypass40x.py [-h] -d DOMAIN -p PATH [-xh HEADER]
+
+usage: bypass40x.py [-h] -d DOMAIN -p PATHLIST [-xh HEADER]
 
 optional arguments:
   -h, --help            		show this help message and exit
   -d DOMAIN, --domain DOMAIN  	target domain
-  -p PATH, --path PATH  		File path dontains paths to bypass
+  -p PATH, --path PATHLIST  		File path dontains paths to bypass
   -xh HEADER, --header HEADER	Extra header
 ```
 
