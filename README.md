@@ -5,9 +5,8 @@ python3 bypass40X.py -d example.com -p paths.txt
 
 
 ***WIP Active development***
-Installation
 
-##### Installation
+#### Installation
 
 ```
 git clone https://github.com/0verread/bypass40X.git
@@ -15,7 +14,7 @@ cd bypass40X
 python3 bypass40x.py -h
 ```
 
-### Usage:
+#### Usage
 
 pythton3 bypass40x.py -d <target-domain> -p <pathlist> 
 ```bash
