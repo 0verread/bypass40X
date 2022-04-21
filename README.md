@@ -5,8 +5,9 @@ python3 bypass40X.py -d example.com -p paths.txt
 
 
 ***WIP Active development***
+Installation
 
-### Installtion
+##### Installation
 
 ```
 git clone https://github.com/0verread/bypass40X.git
