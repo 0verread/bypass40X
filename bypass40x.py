@@ -4,7 +4,6 @@ import sys
 import argparse
 from os import popen
 from pathlib import Path
-# from colorama import Fore, Back, Style
 
 parser = argparse.ArgumentParser()
 
@@ -36,7 +35,6 @@ def get_http_verbs():
 		'patch"': '-X PATCH',
 		'put' : '-X PUT'
 	}
-
 	return verbs_dict
 
 def get_headers(domain, path):
@@ -46,7 +44,6 @@ def get_headers(domain, path):
 		'x-original-url' : f'-H X-Original-URL: {path}',
 		'x-forwarded-for-lh' : f'-H X-Forwarded-For: http://127.0.0.1',
 	}
-
 	return headers
 
 def get_urls(domain, path, extra_header=None):
@@ -71,7 +68,7 @@ def get_urls(domain, path, extra_header=None):
 	urls.append(f"{domain}{path}%20")
 	urls.append(f"{domain}{path}?")
 
-	# HTTP verbs 
+	# HTTP verbs temper
 	urls.append(f"{http_verbs['post']} {domain}{path}")
 	urls.append(f"{http_verbs['trace']} {domain}{path}")
 	urls.append(f"{http_verbs['get']} {domain}{path}")
@@ -119,6 +116,7 @@ def main():
 	pathlist  = args.path
 	extra_header = args.header
 
+	# Check URL format
 	if not domain.startswith("http://") and not domain.startswith("https://"):
 		print(f"URL parameter doesn't start  with http or https")
 		sys.exit(1)
@@ -126,6 +124,7 @@ def main():
 	with open(pathlist) as file:
 		paths = [path.rstrip() for path in file]
 	
+	# Check if any path is provided
 	if len(paths) == 0:
 		print(f"Path file is empty. Add minimun one path.")
 		sys.exit(1)
@@ -133,6 +132,13 @@ def main():
 		request_handler(domain, paths, extra_header)
 
 if __name__ == "__main__" :
-	print(banner)
-	main()
+	try:
+
+		print(banner)
+		main()
+	except KeyboardInterrupt:
+		print(f"Exiting...")
+	except Exception as e:
+		print(f"Exiting")
+		print(f"Reason: {e}")
 
