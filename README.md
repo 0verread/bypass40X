@@ -3,9 +3,6 @@ Python script to bypass 40X
 
 python3 bypass40X.py -d example.com -p paths.txt
 
-
-***WIP Active development***
-
 #### Installation
 
 ```
@@ -28,3 +25,8 @@ optional arguments:
   -xh HEADER, --header HEADER	Extra header
 ```
 
+#### Features
+
+1. Multiple path can be checked against one single domain
+2. Verb tempering 
+3. Support of extra header e.g. User-agent which is necessary to perform pentest on some targets. user-agent could be your name or unique identifier to standout in target machine log, so they know it's you and don't block your IP.

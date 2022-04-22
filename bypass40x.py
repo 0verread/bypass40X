@@ -133,7 +133,6 @@ def main():
 
 if __name__ == "__main__" :
 	try:
-
 		print(banner)
 		main()
 	except KeyboardInterrupt:
