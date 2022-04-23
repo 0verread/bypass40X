@@ -28,23 +28,23 @@ def make_curl_request(url):
 	return curl_req, code
 
 def get_http_verbs():
-	verbs_dict = {
+	return {
 		'get' : '-X GET',
 		'post' : '-X POST',
 		'trace' : '-X TRACE',
 		'patch"': '-X PATCH',
 		'put' : '-X PUT'
 	}
-	return verbs_dict
+	# return verbs_dict
 
 def get_headers(domain, path):
-	headers = {
+	return {
 		'x-forwarded-for' : f'-H X-Forwarded-For: 127.0.0.1:80',
 		'x-rewrite-url' : f'-H X-rewrite-url: {path}',
 		'x-original-url' : f'-H X-Original-URL: {path}',
 		'x-forwarded-for-lh' : f'-H X-Forwarded-For: http://127.0.0.1',
 	}
-	return headers
+	# return headers
 
 def get_urls(domain, path, extra_header=None):
 	urls = []
