@@ -14,7 +14,7 @@ python3 bypass40x.py -h
 #### Usage
 
 pythton3 bypass40x.py -d <target-domain> -p <pathlist> 
-```bash
+```
 
 usage: bypass40x.py [-h] -d DOMAIN -p PATHLIST [-xh HEADER]
 
