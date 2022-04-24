@@ -14,7 +14,7 @@ python3 bypass40x.py -h
 #### Usage
 
 pythton3 bypass40x.py -d <target-domain> -p <pathlist> 
-```bash
+```
 
 usage: bypass40x.py [-h] -d DOMAIN -p PATHLIST [-xh HEADER]
 
@@ -27,6 +27,6 @@ optional arguments:
 
 #### Features
 
-1. Multiple path can be checked against one single domain
+1. Multiple path can be checked against one single domain. directory and/or sub-directory.
 2. Verb tempering 
 3. Support of extra header e.g. User-agent which is necessary to perform pentest on some targets. user-agent could be your name or unique identifier to standout in target machine log, so they know it's you and don't block your IP.

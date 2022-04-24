@@ -35,7 +35,6 @@ def get_http_verbs():
 		'patch"': '-X PATCH',
 		'put' : '-X PUT'
 	}
-	# return verbs_dict
 
 def get_headers(domain, path):
 	return {
@@ -44,7 +43,6 @@ def get_headers(domain, path):
 		'x-original-url' : f'-H X-Original-URL: {path}',
 		'x-forwarded-for-lh' : f'-H X-Forwarded-For: http://127.0.0.1',
 	}
-	# return headers
 
 def get_urls(domain, path, extra_header=None):
 	urls = []
@@ -92,9 +90,9 @@ def do_bypass(urls):
 		curl_req, code  = make_curl_request(url)
 		status_code = code.split( " ")[1]
 		if status_code == "200":
-			print(f"\033[92m{status_code} : {curl_req} \033[0m")
+			print(f"\033[92m{status_code}\033[0m : {curl_req}")
 		elif status_code.startswith("30"):
-			print(f"\033[93m{status_code} : {curl_req} \033[0m")
+			print(f"\033[93m{status_code}\033[0m : {curl_req}")
 		else:
 			print(f"{status_code} : {curl_req}")
 
@@ -113,7 +111,7 @@ def request_handler(domain, paths, extra_header=None):
 
 def main():
 	domain = args.domain
-	pathlist  = args.path
+	pathlist  = args.pathlist
 	extra_header = args.header
 
 	# Check URL format
